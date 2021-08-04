@@ -69,9 +69,9 @@
           // height: 720,
         });
         camera.start();
-        toast('[camera.start]');
+        toast('[camera.start]', 10);
       } catch (error) {
-        toast(JSON.stringify(error));
+        toast(JSON.stringify(error), 10);
       }
     } else {
       console.log('等待dom渲染...');
@@ -117,7 +117,7 @@
     canvasCtx.restore();
   }
 
-  function toast(msg) {
+  function toast(msg, times = 2) {
     const toastContent = document.getElementById('toast-content');
     const toast = document.getElementById('toast');
     toastContent.style.display = 'flex';
@@ -125,7 +125,7 @@
     setTimeout(() => {
       toast.innerHTML = '';
       toastContent.style.display = 'none';
-    }, 2000);
+    }, times * 1000);
   }
 </script>
 
