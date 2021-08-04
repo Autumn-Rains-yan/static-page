@@ -25,6 +25,9 @@
       <video class="input_video"></video>
       <canvas class="output_canvas" width="1280px" height="720px"></canvas>
     </div>
+    <div class="toast-content" id="toast-content">
+      <span id="toast" class="toast">111</span>
+    </div>
   </body>
 </html>
 
@@ -32,13 +35,17 @@
   let videoElement = document.getElementsByClassName('input_video')[0];
   let canvasElement = document.getElementsByClassName('output_canvas')[0];
   let canvasCtx = canvasElement.getContext('2d');
+
   const intervalTemp = setInterval(() => {
     videoElement = document.getElementsByClassName('input_video')[0];
     canvasElement = document.getElementsByClassName('output_canvas')[0];
     canvasCtx = canvasElement.getContext('2d');
-
+    // toast(videoElement);
+    // setTimeout(() => {
+    //   toast(canvasElement);
+    // }, 2000);
     if (videoElement && canvasElement) {
-      console.log('dom已渲染完毕');
+      toast('dom已渲染完毕');
       clearInterval(intervalTemp);
       const faceMesh = new FaceMesh({
         locateFile: (file) => {
@@ -65,6 +72,7 @@
     }
   }, 100);
   function onResults(results) {
+    toast(results);
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     canvasCtx.drawImage(
@@ -102,4 +110,35 @@
     }
     canvasCtx.restore();
   }
+
+  function toast(msg) {
+    const toastContent = document.getElementById('toast-content');
+    const toast = document.getElementById('toast');
+    toastContent.style.display = 'flex';
+    toast.innerHTML = msg;
+    setTimeout(() => {
+      toast.innerHTML = '';
+      toastContent.style.display = 'none';
+    }, 2000);
+  }
 </script>
+
+<style>
+  .toast-content {
+    position: fixed;
+    bottom: 5vw;
+    width: 100%;
+    display: none;
+    justify-content: center;
+  }
+  .toast {
+    background: #e1e1e1;
+    padding: 2vw 10vw;
+    border-radius: 50vw;
+    font-size: 4.2vw;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
