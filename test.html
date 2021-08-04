@@ -52,21 +52,31 @@
         },
       });
       console.log(faceMesh);
-      toast(JSON.stringify(faceMesh));
+
       faceMesh.setOptions({
         maxNumFaces: 1,
         minDetectionConfidence: 0.5,
         minTrackingConfidence: 0.5,
       });
+
+      toast(1);
       faceMesh.onResults(onResults);
+
+      setTimeout(() => {
+        toast(2);
+      }, 5000);
 
       const camera = new Camera(videoElement, {
         onFrame: async () => {
           await faceMesh.send({ image: videoElement });
         },
-        width: 1280,
-        height: 720,
+        // width: 1280,
+        // height: 720,
       });
+
+      setTimeout(() => {
+        toast(3);
+      }, 10000);
       camera.start();
     } else {
       console.log('等待dom渲染...');
