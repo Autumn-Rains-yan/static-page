@@ -51,33 +51,27 @@
           return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
         },
       });
-      console.log(faceMesh);
 
-      faceMesh.setOptions({
-        maxNumFaces: 1,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5,
-      });
+      try {
+        faceMesh.setOptions({
+          maxNumFaces: 1,
+          minDetectionConfidence: 0.5,
+          minTrackingConfidence: 0.5,
+        });
 
-      toast(1);
-      faceMesh.onResults(onResults);
+        faceMesh.onResults(onResults);
 
-      setTimeout(() => {
-        toast(2);
-      }, 5000);
-
-      const camera = new Camera(videoElement, {
-        onFrame: async () => {
-          await faceMesh.send({ image: videoElement });
-        },
-        // width: 1280,
-        // height: 720,
-      });
-
-      setTimeout(() => {
-        toast(3);
-      }, 10000);
-      camera.start();
+        const camera = new Camera(videoElement, {
+          onFrame: async () => {
+            await faceMesh.send({ image: videoElement });
+          },
+          // width: 1280,
+          // height: 720,
+        });
+        camera.start();
+      } catch (error) {
+        toast(JSON.stringify(error));
+      }
     } else {
       console.log('等待dom渲染...');
     }
