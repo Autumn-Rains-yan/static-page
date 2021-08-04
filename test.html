@@ -70,10 +70,10 @@
   const intervalTemp = setInterval(() => {
     const videoElement = document.getElementsByClassName('input_video')[0];
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
+    const canvasCtx = canvasElement.getContext('2d');
 
     if (videoElement && canvasElement) {
       console.log('dom已渲染完毕');
-      const canvasCtx = canvasElement.getContext('2d');
       clearInterval(intervalTemp);
       const faceMesh = new FaceMesh({
         locateFile: (file) => {
