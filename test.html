@@ -35,6 +35,7 @@
   let videoElement = document.getElementsByClassName('input_video')[0];
   let canvasElement = document.getElementsByClassName('output_canvas')[0];
   let canvasCtx = canvasElement.getContext('2d');
+  let i = 0;
 
   const intervalTemp = setInterval(() => {
     videoElement = document.getElementsByClassName('input_video')[0];
@@ -69,15 +70,17 @@
           // height: 720,
         });
         camera.start();
-        toast('[camera.start]', 10);
+        toast('[camera.start]', 1);
       } catch (error) {
-        toast(JSON.stringify(error), 10);
+        toast(JSON.stringify(error), 1);
       }
     } else {
       console.log('等待dom渲染...');
     }
   }, 100);
   function onResults(results) {
+    i++;
+    toast('[result times]: ' + String(i), 1);
     // toast(results);
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
